@@ -35,7 +35,7 @@ def bots_handler(path):
             "datetime": datetime.utcnow(),
             "uri": request.path,
             "method": request.method,
-            "request_data": (request.data or request.form) if not request.files else f"<uploaded file(s)>: {len(request.files.keys())}",
+            "request_data": (request.data or request.form) if not request.files else f"<Uploaded File(s)>: {len(request.files.keys())}",
             "query_string": dict(request.args),
             "origin": request.origin,
             "headers": dict(request.headers),
@@ -51,11 +51,11 @@ def bots_handler(path):
                 files_renaming_map = dict()
                 for filename in request.files:
                     new_filename = str(uuid.uuid4())
-                    files_renaming_map[new_filename] = filename
+                    files_renaming_map[new_filename] = {"key": filename, "filename": request.files[filename].filename}
                     logger.error(request.files[filename])
                     request.files[filename].save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
 
-                data["request_data"] = f"<Files Uploaded>: {files_renaming_map}" 
+                data["files"] = files_renaming_map
         except Exception as e:
             logger.error(f"Failed saving file/s {e}")
 
