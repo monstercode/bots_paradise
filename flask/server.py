@@ -40,7 +40,7 @@ def bots_handler(path):
             "origin": request.origin,
             "headers": dict(request.headers),
             "host": request.host,
-            "ip": request.remote_addr,
+            "ip": request.headers.get("X-Real-Ip",  request.remote_addr),
             "user_agent": request.headers.get('User-Agent', ""),
         }
         if type(data["request_data"]) is bytes:
