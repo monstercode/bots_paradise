@@ -2,6 +2,8 @@ This is basically a honeypot that listents to all requests coming to the webserv
 It supports uploads, which are saved in a folder which is not retrievable from the webserver.
 The root page has a counter to know how many records are saved up to the moment
 
+The mongo instance is not exposed outside of docker.
+
 To run it:
 
 ```docker-compose up -d```
